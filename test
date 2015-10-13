@@ -1,0 +1,18 @@
+#!/bin/bash
+
+cat Dockerfile.template | sed "s/PLACEHOLDER/$1/" > Dockerfile
+
+docker rmi -f test-mount
+
+set -e
+
+echo FOO > src/file
+docker build -t test-mount .
+
+docker run --rm -v `pwd`/src:/app/src:ro test-mount
+
+echo BAR > src/file
+docker run --rm -v `pwd`/src:/app/src:ro test-mount
+
+echo AGAIN > src/file
+docker run --rm -v `pwd`/src:/app/src:ro test-mount

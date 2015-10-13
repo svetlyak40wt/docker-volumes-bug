@@ -1,0 +1,4 @@
+FROM PLACEHOLDER:latest
+COPY . /app
+VOLUME /app/src
+CMD cat /app/src/file
